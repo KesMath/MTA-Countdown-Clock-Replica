@@ -1,0 +1,11 @@
+setup.cfg
+setup.py
+google/__init__.py
+google/transit/__init__.py
+google/transit/gtfs_realtime_pb2.py
+gtfs_realtime_bindings.egg-info/PKG-INFO
+gtfs_realtime_bindings.egg-info/SOURCES.txt
+gtfs_realtime_bindings.egg-info/dependency_links.txt
+gtfs_realtime_bindings.egg-info/namespace_packages.txt
+gtfs_realtime_bindings.egg-info/requires.txt
+gtfs_realtime_bindings.egg-info/top_level.txt
