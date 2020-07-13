@@ -1,6 +1,6 @@
 import os
 
-#TODO: Add properties file where api_key becomes encrypted and change abs path format below
+#TODO: move this to ini file
 REAL_TIME_FEED_LINK = "http://datamine.mta.info/mta_esi.php?key={0}&feed_id={1}"
 
 '''
