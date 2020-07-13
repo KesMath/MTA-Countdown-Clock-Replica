@@ -22,6 +22,12 @@ def parse_file_name(abs_file_path):
         'posix': '/',
         'nt': '\\'
     }
-    path_delim = os_filepath_map.get(os.name)
+
+    try:
+        path_delim = os_filepath_map.get(os.name)
+    except KeyError:
+        print("Operating System: " + os.name + " is not supported by this function.\n " +
+                                               "Add proper key -> value into" + parse_file_name.__name__)
+
     list_split = abs_file_path.split(path_delim)
     return list_split[len(list_split)-1].split('.')[0]
