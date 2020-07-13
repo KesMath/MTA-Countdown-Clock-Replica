@@ -1,1 +1,4 @@
-Repository that pulls in real time data feeds from the Metropolitan Transportation Authority based in New York City. The goal is to analyze weekday 2 & 5 North Bound Lines and discover trends based on emergency alerts. By uncovering emergency trends, the findings can be published so that commuters can know: the probability of the type of emergency happening, which stop it typically occurs on the transit line, and finally, which day and what time during the day it occurs. Commuters can avoid getting caught in major delay points by using this predictive model to find alternate travel means.
+Repository that pulls in real time data feeds from the Metropolitan Transportation Authority based in New York City.
+The goal of this repo serves as a </em>'HELLO WORLD'</em> into the realm of electronics to which I shall replicate a real-time
+countdown clock normally found in MTA subway stations. This shall be accomplished by mapping the std_out stream of this
+application along with relevant static content (i.e. portable pixel format image and train text) to display on LED matrix controlled by a Raspberry Pi.
