@@ -1,12 +1,16 @@
 import urllib.request
+#FIXME:  may be deprecated!
 from configparser import ConfigParser
 import datetime
 from config.gtfs_class_parsers import FEED_MESSAGE
-from globals import REAL_TIME_FEED_LINK, LIST_OF_FEEDS, PROJECT_DIR
+from util.os_func import PROJECT_DIR
+from realtime_feed_urls import FEED_URLS
 
 
 
 gtfs_parser = FEED_MESSAGE.get("class")
+
+#FIXME:  may be deprecated!
 parser = ConfigParser()
 parser.read(PROJECT_DIR + '/config/mta_config.ini')
 API_KEY = parser.get('keys', 'API_KEY')
@@ -26,13 +30,13 @@ class MTARealTimeFeed:
         self.__feed_timestamp,\
         self.__gtfs_realtime_version = self.connect(feed_id)
 
-    def connect(self, feed_id):
-        if feed_id not in LIST_OF_FEEDS:
-            raise ValueError(str(feed_id) +
-                             " is NOT a part of MTA train partitions: " +
-                             str(LIST_OF_FEEDS))
+    def connect(self, feed_set):
+        if feed_set not in FEED_URLS.keys():
+            raise ValueError(str(feed_set) +
+                             " is NOT identical to any feed set listed: " +
+                             FEED_URLS.keys().__str__())
 
-        real_time_feed_link = REAL_TIME_FEED_LINK.format(API_KEY, feed_id)
+        real_time_feed_link = FEED_URLS.get(feed_set)
 
         try:
             bytes_response = urllib.request.urlopen(real_time_feed_link)
@@ -89,11 +93,13 @@ def main():
     #TODO: Refer to gtfs_class_parsers.py
     # Given that multiple departure times for a given train is obtained,
     # how does one determine which one to always correctly choose from for a given stop??
-    mta_object = MTARealTimeFeed(1)
 
-    print("MTA Trains: " + str(mta_object.get_train_count()))
+    #TODO: better design to have class user just insert train number/letter
+    mta_object = MTARealTimeFeed("123456")
+
+    #print("MTA Trains: " + str(mta_object.get_train_count()))
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
-    print("Feed Version: " + mta_object.get_realtime_version())
+    #print("Feed Version: " + mta_object.get_realtime_version())
 
     feed_entity_object = mta_object.get_mta_trains()
     print(feed_entity_object)

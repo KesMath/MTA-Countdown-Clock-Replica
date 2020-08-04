@@ -1,13 +1,5 @@
 import os
 
-#TODO: move this to ini file
-REAL_TIME_FEED_LINK = "http://datamine.mta.info/mta_esi.php?key={0}&feed_id={1}"
-
-'''
-MTA trains are grouped into these feed numbers.
-Grouping details available on: http://datamine.mta.info/list-of-feeds
-'''
-LIST_OF_FEEDS = [1, 2, 11, 16, 21, 26, 31, 36, 51]
 
 PROJECT_DIR = os.path.dirname(os.getcwd())
 

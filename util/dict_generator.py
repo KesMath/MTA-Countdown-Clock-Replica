@@ -2,7 +2,7 @@
 metaprogramming script to transform certain comma-separated values in
 txt_files/*.txt into simple key value pairs
 """
-from globals import PROJECT_DIR, parse_file_name
+from util.os_func import PROJECT_DIR, parse_file_name
 from util.custom_exceptions import FileExtensionException
 
 SAVE_TO_DIRECTORY = '/config/'
