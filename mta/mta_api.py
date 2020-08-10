@@ -30,7 +30,8 @@ class MTARealTimeFeed:
     def connect(self, route_id):
         real_time_feed_link = get_url(route_id)
         try:
-            bytes_response = requests.get(url=real_time_feed_link, headers=HEADERS)
+            #post carries request parameters in message body as detailed
+            bytes_response = requests.post(url=real_time_feed_link, headers=HEADERS)
             gtfs_parser.ParseFromString(bytes_response.content)
 
         except requests.RequestException as e:
