@@ -26,9 +26,3 @@ def get_url(route_id):
 
     raise RouteIdException("Route ID '" + str(route_id) +
                            "' does not exist or is not supported by application!")
-
-
-#if __name__ == '__main__':
-#    print(get_url('2'))
-#    print(get_url(2))
-#    print(get_url('22'))
