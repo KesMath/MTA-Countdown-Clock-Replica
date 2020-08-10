@@ -1,5 +1,4 @@
-import urllib.request
-#FIXME:  may be deprecated!
+import requests
 from configparser import ConfigParser
 import datetime
 from config.gtfs_class_parsers import FEED_MESSAGE
@@ -7,13 +6,11 @@ from util.os_func import PROJECT_DIR
 from realtime_feed_urls import get_url
 
 
-
 gtfs_parser = FEED_MESSAGE.get("class")
-
-#FIXME:  may be deprecated!
 parser = ConfigParser()
 parser.read(PROJECT_DIR + '/config/mta_config.ini')
 API_KEY = parser.get('keys', 'API_KEY')
+HEADERS = {'x-api-key': API_KEY}
 
 class MTARealTimeFeed:
     '''
@@ -33,16 +30,11 @@ class MTARealTimeFeed:
     def connect(self, route_id):
         real_time_feed_link = get_url(route_id)
         try:
-            bytes_response = urllib.request.urlopen(real_time_feed_link)
-            #TODO: handle unlikely edge case where bytes_response throws HTTP status 200 but data set is empty string
+            bytes_response = requests.get(url=real_time_feed_link, headers=HEADERS)
+            gtfs_parser.ParseFromString(bytes_response._content)
 
-            #TODO: create subclasses per parser type ... leave name of main class as is then subclass: MTAFeedEntityParser, etc
-            gtfs_parser.ParseFromString(bytes_response.read())
-
-        except urllib.error.URLError as e:
-            print("Cannot connect to URL: " + real_time_feed_link + "\n" + str(e.reason))
-
-        #code for subclass would stop here if implemented
+        except requests.RequestException as e:
+            print("Cannot connect to URL: " + real_time_feed_link + "\n" + e.__str__())
 
         return ([entity for entity in gtfs_parser.entity],
                 gtfs_parser.header.timestamp,
