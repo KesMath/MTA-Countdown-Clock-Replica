@@ -1,3 +1,5 @@
+from util.custom_exceptions import RouteIdException
+
 BASELINE_URL = "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs"
 
 
@@ -15,11 +17,18 @@ FEED_URLS = {
 }
 
 def get_url(route_id):
+    if isinstance(route_id, int):
+        raise TypeError(str(route_id) + " must be of type char or string!")
     for key, value in FEED_URLS.items():
         for route in key:
             if route_id is route:
                 return FEED_URLS.get(key)
 
+    raise RouteIdException("Route ID '" + str(route_id) +
+                           "' does not exist or is not supported by application!")
 
-if __name__ == '__main__':
-    print(get_url('N'))
+
+#if __name__ == '__main__':
+#    print(get_url('2'))
+#    print(get_url(2))
+#    print(get_url('22'))
