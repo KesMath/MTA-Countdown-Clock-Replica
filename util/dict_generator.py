@@ -1,6 +1,6 @@
 """
 metaprogramming script to transform certain comma-separated values in
-txt_files/*.txt into simple key value pairs
+txt_files/*.txt into simple key value pairs located in config/*_dict.py
 """
 from util.os_func import PROJECT_DIR, parse_file_name
 from util.custom_exceptions import FileExtensionException
