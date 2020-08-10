@@ -4,7 +4,7 @@ from configparser import ConfigParser
 import datetime
 from config.gtfs_class_parsers import FEED_MESSAGE
 from util.os_func import PROJECT_DIR
-from realtime_feed_urls import FEED_URLS
+from realtime_feed_urls import get_url
 
 
 
@@ -30,14 +30,8 @@ class MTARealTimeFeed:
         self.__feed_timestamp,\
         self.__gtfs_realtime_version = self.connect(feed_id)
 
-    def connect(self, feed_set):
-        if feed_set not in FEED_URLS.keys():
-            raise ValueError(str(feed_set) +
-                             " is NOT identical to any feed set listed: " +
-                             FEED_URLS.keys().__str__())
-
-        real_time_feed_link = FEED_URLS.get(feed_set)
-
+    def connect(self, route_id):
+        real_time_feed_link = get_url(route_id)
         try:
             bytes_response = urllib.request.urlopen(real_time_feed_link)
             #TODO: handle unlikely edge case where bytes_response throws HTTP status 200 but data set is empty string
@@ -95,7 +89,7 @@ def main():
     # how does one determine which one to always correctly choose from for a given stop??
 
     #TODO: better design to have class user just insert train number/letter
-    mta_object = MTARealTimeFeed("123456")
+    mta_object = MTARealTimeFeed("2")
 
     #print("MTA Trains: " + str(mta_object.get_train_count()))
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
