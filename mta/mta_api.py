@@ -31,7 +31,7 @@ class MTARealTimeFeed:
         real_time_feed_link = get_url(route_id)
         try:
             bytes_response = requests.get(url=real_time_feed_link, headers=HEADERS)
-            gtfs_parser.ParseFromString(bytes_response._content)
+            gtfs_parser.ParseFromString(bytes_response.content)
 
         except requests.RequestException as e:
             print("Cannot connect to URL: " + real_time_feed_link + "\n" + e.__str__())
