@@ -10,7 +10,7 @@ gtfs_parser = FEED_MESSAGE.get("class")
 parser = ConfigParser()
 parser.read(PROJECT_DIR + '/config/mta_config.ini')
 API_KEY = parser.get('keys', 'API_KEY')
-HEADERS = {'x-api-key': API_KEY}
+HEADERS = {"x-api-key": API_KEY}
 
 class MTARealTimeFeed:
     '''
@@ -30,7 +30,6 @@ class MTARealTimeFeed:
     def connect(self, route_id):
         real_time_feed_link = get_url(route_id)
         try:
-            #post carries request parameters in message body as detailed
             bytes_response = requests.post(url=real_time_feed_link, headers=HEADERS)
             gtfs_parser.ParseFromString(bytes_response.content)
 
