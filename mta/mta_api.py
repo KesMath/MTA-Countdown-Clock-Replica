@@ -4,12 +4,15 @@ import datetime
 from config.gtfs_class_parsers import FEED_MESSAGE
 from util.os_func import PROJECT_DIR
 from realtime_feed_urls import get_url
+from util.cryptographic_func import decrypt
 
 
 gtfs_parser = FEED_MESSAGE.get("class")
 parser = ConfigParser()
 parser.read(PROJECT_DIR + '/config/mta_config.ini')
-API_KEY = parser.get('keys', 'API_KEY')
+cipher_key = parser.get('keys', 'API_KEY')
+API_KEY = decrypt(cipher_key)
+API_KEY = API_KEY.decode("utf-8")
 HEADERS = {"x-api-key": API_KEY}
 
 class MTARealTimeFeed:
