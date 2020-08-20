@@ -25,14 +25,18 @@ def parse_file_name(abs_file_path):
     return list_split[len(list_split)-1].split('.')[0]
 
 
-def read_file(absolute_path):
+def read_file(relative_path, file_name, mode):
     """
-    :param absolute_path: full path including file name
+    :param relative_path: directory where file will be located
+    :param file_name: name of the file
+    :param mode: ('r','w', 'x','a','b','t','+') and combinations i.e. 'w+b', 'rb', etc
     :return: entire file is returned as a list of strings
     """
+    #TODO: need to vet non-accepted chars being passed in to mode param
+    absolute_path = os.path.join(relative_path, file_name)
     if os.path.isfile(absolute_path) is True:
         try:
-            with open(absolute_path, "r") as f:
+            with open(absolute_path, mode) as f:
                 data = f.readlines()
                 return data
 
