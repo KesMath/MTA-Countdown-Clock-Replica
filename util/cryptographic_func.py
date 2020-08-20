@@ -15,11 +15,11 @@ def encrypt(plaintext):
 
 def decrypt(ciphertext):
     """
-    :param ciphertext: encrypted text
+    :param ciphertext: encrypted text as string type
     :return: plaintext format needed to be executed by app logic
     """
     fernet = Fernet(read_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="rb")[0])
-    return fernet.decrypt(ciphertext)
+    return fernet.decrypt(str.encode(ciphertext))
 
 
 def generate_keyfile():
@@ -30,6 +30,8 @@ def generate_keyfile():
 
 
 if __name__ == '__main__':
+    #TODO: write these procedures into functions
+
     ''''*********** |EXPOSE API KEY|*********** '''
     #reading encrypted key from config file
     from configparser import ConfigParser
@@ -37,19 +39,18 @@ if __name__ == '__main__':
     parser.read(PROJECT_DIR + '/config/mta_config.ini')
     API_KEY = parser.get('keys', 'API_KEY')
 
-    #convert to bytes
-    cipher_text = str.encode(API_KEY)
-
     #decrypt hidden text - function will fail without 'private_key.key' file!
-    api_key = decrypt(cipher_text)
+    api_key = decrypt(API_KEY)
     print(api_key)
 
 
     # ''''*********** |GENERATE NEW PRIVATE KEY & CIPHER TEXT PAIRING|*********** '''
-    # PLAINTEXT_KEY = b'b22616c53ad40d7b7dc7f9dd5a6977fb'
+    # PLAINTEXT_KEY = b'<API KEY HERE>'
     # generate_keyfile()
-    # cipher = encrypt(PLAINTEXT_KEY) #manually update mta_config.ini with new cipher text
-    # assert(PLAINTEXT_KEY == decrypt(cipher))
+    # cipher = encrypt(PLAINTEXT_KEY)
+    # print(cipher)
+    # #manually update mta_config.ini with new cipher text
+    # assert(PLAINTEXT_KEY == decrypt(cipher.decode("utf-8")))
 
 
 
