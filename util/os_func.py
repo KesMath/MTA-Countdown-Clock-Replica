@@ -51,8 +51,8 @@ def write_file(relative_path, name, mode, content):
     :param content:
     :return:
     """
-    #TODO: prevent special characters from being passed through name parameter
-    #TODO: need to limit characters being passed in to mode param
+    #TODO: prevent special chars from being passed through name parameter
+    #TODO: need to vet chars being passed in to mode param as: ('r','w', 'x','a','b','t','+') and combinations with '+' i.e. 'w+b'
 
     if os.path.isdir(relative_path) is True:
         with open(os.path.join(relative_path + name), mode) as f:
