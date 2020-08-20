@@ -9,7 +9,7 @@ def encrypt(plaintext):
     :return: cipher text that can be exposed publically
     """
     fernet = Fernet(read_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="rb")[0])
-    print(fernet.encrypt(plaintext))
+    return fernet.encrypt(plaintext)
 
 
 
@@ -22,7 +22,7 @@ def decrypt(ciphertext):
     return fernet.decrypt(ciphertext)
 
 
-def generate_key():
+def generate_keyfile():
     """
     :return: saves key to 'private_key.key' file
     """
@@ -40,6 +40,16 @@ if __name__ == '__main__':
     #convert to bytes
     cipher_text = str.encode(API_KEY)
 
+    #decrypt hidden text - function will fail without 'private_key.key' file!
     api_key = decrypt(cipher_text)
     print(api_key)
+
+
+    # ''''*********** |GENERATE NEW PRIVATE KEY & CIPHER TEXT PAIRING|*********** '''
+    # PLAINTEXT_KEY = b'b22616c53ad40d7b7dc7f9dd5a6977fb'
+    # generate_keyfile()
+    # cipher = encrypt(PLAINTEXT_KEY) #manually update mta_config.ini with new cipher text
+    # assert(PLAINTEXT_KEY == decrypt(cipher))
+
+
 
