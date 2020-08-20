@@ -43,6 +43,7 @@ if __name__ == '__main__':
     api_key = decrypt(API_KEY)
     print(api_key)
 
+#==============================================================================
 
     # ''''*********** |GENERATE NEW PRIVATE KEY & CIPHER TEXT PAIRING|*********** '''
     # PLAINTEXT_KEY = b'<API KEY HERE>'
