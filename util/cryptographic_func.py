@@ -9,7 +9,7 @@ def encrypt(plaintext):
     :return: cipher text that can be exposed publically
     """
     fernet = Fernet(read_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="rb")[0])
-    return fernet.encrypt(plaintext)
+    print(fernet.encrypt(plaintext))
 
 
 
@@ -31,6 +31,7 @@ def generate_key():
 
 if __name__ == '__main__':
     ''''*********** |EXPOSE API KEY|*********** '''
+    #reading encrypted key from config file
     from configparser import ConfigParser
     parser = ConfigParser()
     parser.read(PROJECT_DIR + '/config/mta_config.ini')
