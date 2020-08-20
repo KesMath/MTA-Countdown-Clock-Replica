@@ -43,19 +43,19 @@ def read_file(absolute_path):
         raise OSError(absolute_path + " is an invalid file!")
 
 
-def write_file(relative_path, name, mode, content):
+def write_file(relative_path, file_name, mode, content):
     """
-    :param relative_path:
-    :param name:
-    :param mode:
-    :param content:
-    :return:
+    :param relative_path: directory where file will be located
+    :param file_name: name of the file
+    :param mode: ('r','w', 'x','a','b','t','+') and combinations i.e. 'w+b', 'rb', etc
+     :param content: string to be placed into file
+    :return: file containing content located in 'relative_path/file_name'
     """
     #TODO: prevent special chars from being passed through name parameter
-    #TODO: need to vet chars being passed in to mode param as: ('r','w', 'x','a','b','t','+') and combinations with '+' i.e. 'w+b'
+    #TODO: need to vet non-accepted chars being passed in to mode param
 
     if os.path.isdir(relative_path) is True:
-        with open(os.path.join(relative_path + name), mode) as f:
+        with open(os.path.join(relative_path, file_name), mode) as f:
             try:
                 f.write(content)
 
