@@ -22,6 +22,7 @@ def generate_dictionary(abs_file_path, key_index, value_index):
                                      " is not a txt file!")
 
     else:
+        #TODO: replace with os util read_file
         try:
             with open(abs_file_path, "r") as f:
                 data = f.readlines()[1:] #removing header row
@@ -47,6 +48,7 @@ def generate_dictionary(abs_file_path, key_index, value_index):
                                                 + str(key_index) + "," + str(value_index) + ")")
 
         dict_str += "}"
+        #TODO: replace with os util write_file
         with open(PROJECT_DIR + SAVE_TO_DIRECTORY + dict_name + "_dict.py", "w") as f1:
             f1.write(dict_str)
 
