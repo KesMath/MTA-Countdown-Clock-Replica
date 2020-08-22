@@ -29,11 +29,9 @@ def generate_keyfile():
     write_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="wb", content=Fernet.generate_key())
 
 
-if __name__ == '__main__':
-    #TODO: write these procedures into functions
-
-    ''''*********** |EXPOSE API KEY|*********** '''
-    #reading encrypted key from config file
+def expose_api_key():
+    """*********** |EXPOSES API KEY|*********** """
+    #get encrypted key from config file
     from configparser import ConfigParser
     parser = ConfigParser()
     parser.read(PROJECT_DIR + '/config/mta_config.ini')
@@ -43,7 +41,10 @@ if __name__ == '__main__':
     api_key = decrypt(API_KEY)
     print(api_key)
 
-#==============================================================================
+
+if __name__ == '__main__':
+    expose_api_key()
+    #==============================================================================
 
     # ''''*********** |GENERATE NEW PRIVATE KEY & CIPHER TEXT PAIRING|*********** '''
     # PLAINTEXT_KEY = b'<API KEY HERE>'
