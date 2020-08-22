@@ -2,13 +2,13 @@
 metaprogramming script to transform certain comma-separated values in
 txt_files/*.txt into simple key value pairs located in config/*_dict.py
 """
-from util.os_func import PROJECT_DIR, parse_file_name
+from util.os_func import os, PROJECT_DIR, read_file, write_file
 from util.custom_exceptions import FileExtensionException
 
-SAVE_TO_DIRECTORY = '/config/'
+SAVE_TO_DIRECTORY = 'config'
 
 
-def generate_dictionary(abs_file_path, key_index, value_index):
+def generate_dictionary(relative_path, filename, key_index, value_index):
     """
     :return: generates a new .py file containing a dictionary variable
              whose key->values pairing is created from parametrized values
@@ -17,20 +17,15 @@ def generate_dictionary(abs_file_path, key_index, value_index):
     if key_index < 0 or value_index < 0:
         raise ValueError("Both index values must be greater than or equal to 0")
 
-    if abs_file_path[-4:] != ".txt":
-        raise FileExtensionException(abs_file_path +\
+    if filename[-4:] != ".txt":
+        raise FileExtensionException(filename +\
                                      " is not a txt file!")
 
     else:
-        #TODO: replace with os util read_file
-        try:
-            with open(abs_file_path, "r") as f:
-                data = f.readlines()[1:] #removing header row
 
-        except OSError as e:
-            print(e)
+        data = read_file(relative_path=relative_path, file_name=filename, mode='r')[1:]
 
-        dict_name = parse_file_name(abs_file_path)
+        dict_name = filename.split('.')[0]
         dict_str = """\"\"\"This python file was generated from """\
                    + generate_dictionary.__name__ + "()\"\"\"\n\n"\
                    + dict_name.upper() + " = { \n"
@@ -48,12 +43,11 @@ def generate_dictionary(abs_file_path, key_index, value_index):
                                                 + str(key_index) + "," + str(value_index) + ")")
 
         dict_str += "}"
-        #TODO: replace with os util write_file
-        with open(PROJECT_DIR + SAVE_TO_DIRECTORY + dict_name + "_dict.py", "w") as f1:
-            f1.write(dict_str)
+        write_file(relative_path=os.path.join(PROJECT_DIR, SAVE_TO_DIRECTORY),
+                   file_name=dict_name + "_dict.py", mode='w', content=dict_str)
 
 def main():
-    generate_dictionary(abs_file_path=PROJECT_DIR + '/txt_files/stops.txt',
+    generate_dictionary(relative_path=os.path.join(PROJECT_DIR, 'txt_files'), filename='stops.txt',
                         key_index=0, value_index=2)
 
 
