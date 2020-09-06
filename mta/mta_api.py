@@ -6,6 +6,7 @@ from config.gtfs_class_parsers import FEED_MESSAGE
 from util.os_func import PROJECT_DIR
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
+from mta.tokenauth import TokenAuth
 
 
 gtfs_parser = FEED_MESSAGE.get("class")
@@ -14,12 +15,11 @@ parser.read(PROJECT_DIR + '/config/mta_config.ini')
 cipher_key = parser.get('keys', 'API_KEY')
 API_KEY = decrypt(cipher_key)
 API_KEY = API_KEY.decode("utf-8")
-HEADERS = {"x-api-key": API_KEY}
 
 class MTARealTimeFeed:
     '''
     class that pulls in real time data feeds from the Metropolitan Transportation Authority
-    based in New York City. The feed that request.post() returns is serialized
+    based in New York City. The feed that request.get() returns is serialized
     (object converted into a binary stream for efficient data transmission across MTA network).
     Thus, Google's gtfs_realtime_pb2 in essential for conversion of this binary into readable format
     '''
@@ -32,7 +32,7 @@ class MTARealTimeFeed:
     def connect(self, route_id):
         real_time_feed_link = get_url(route_id)
         try:
-            bytes_response = requests.post(url=real_time_feed_link, headers=HEADERS)
+            bytes_response = requests.get(url=real_time_feed_link, auth=TokenAuth(API_KEY))
         except requests.RequestException as e:
             print("Cannot connect to URL: " + real_time_feed_link + "\n" + e.__str__())
             sys.exit(1)
