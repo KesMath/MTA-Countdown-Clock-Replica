@@ -86,12 +86,11 @@ def main():
     # Given that multiple departure times for a given train is obtained,
     # how does one determine which one to always correctly choose from for a given stop??
 
-    #TODO: better design to have class user just insert train number/letter
     mta_object = MTARealTimeFeed("2")
 
-    #print("MTA Trains: " + str(mta_object.get_train_count()))
+    print("MTA Trains: " + str(mta_object.get_train_count()))
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
-    #print("Feed Version: " + mta_object.get_realtime_version())
+    print("Feed Version: " + mta_object.get_realtime_version())
 
     feed_entity_object = mta_object.get_mta_trains()
     print(feed_entity_object)
