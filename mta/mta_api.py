@@ -1,3 +1,4 @@
+import sys
 import requests
 from configparser import ConfigParser
 import datetime
@@ -18,11 +19,9 @@ HEADERS = {"x-api-key": API_KEY}
 class MTARealTimeFeed:
     '''
     class that pulls in real time data feeds from the Metropolitan Transportation Authority
-    based in New York City. The feed that request.get() ingests is serialized
+    based in New York City. The feed that request.post() returns is serialized
     (object converted into a binary stream for efficient data transmission across MTA network).
     Thus, Google's gtfs_realtime_pb2 in essential for conversion of this binary into readable format
-
-    Refer to http://datamine.mta.info/list-of-feeds for MTA API changes
     '''
 
     def __init__(self, feed_id):
@@ -34,10 +33,14 @@ class MTARealTimeFeed:
         real_time_feed_link = get_url(route_id)
         try:
             bytes_response = requests.post(url=real_time_feed_link, headers=HEADERS)
-            gtfs_parser.ParseFromString(bytes_response.content)
-
         except requests.RequestException as e:
             print("Cannot connect to URL: " + real_time_feed_link + "\n" + e.__str__())
+            sys.exit(1)
+
+        if bytes_response.status_code != 200:
+            raise requests.exceptions.HTTPError("HTTP Error Occurred: " + str(bytes_response.status_code))
+
+        gtfs_parser.ParseFromString(bytes_response.content)
 
         return ([entity for entity in gtfs_parser.entity],
                 gtfs_parser.header.timestamp,
