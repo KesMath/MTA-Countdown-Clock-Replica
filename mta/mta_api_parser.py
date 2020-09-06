@@ -83,7 +83,7 @@ class MTARealTimeFeedParser:
 
 def main():
     #TODO: api feed can return multiple route_id's (meaning a series of subsequent trains)
-    # first step in parsing should be to fetch all trains for a particular route_id
+    # first step in parsing should be to fetch all trains (by route_id) and store them in a queue structure
 
     mta_object = MTARealTimeFeedParser("2")
 
