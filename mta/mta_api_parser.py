@@ -24,10 +24,10 @@ class MTARealTimeFeedParser:
     Thus, Google's gtfs_realtime_pb2 in essential for conversion of this binary into readable format
     '''
 
-    def __init__(self, feed_id):
+    def __init__(self, route_id):
         self.__mta_trains,\
         self.__feed_timestamp,\
-        self.__gtfs_realtime_version = self.connect(feed_id)
+        self.__gtfs_realtime_version = self.connect(route_id)
 
     def connect(self, route_id):
         real_time_feed_link = get_url(route_id)
@@ -82,9 +82,8 @@ class MTARealTimeFeedParser:
 
 
 def main():
-    #TODO: Refer to gtfs_class_parsers.py
-    # Given that multiple departure times for a given train is obtained,
-    # how does one determine which one to always correctly choose from for a given stop??
+    #TODO: api feed can return multiple route_id's (meaning a series of subsequent trains)
+    # first step in parsing should be to fetch all trains for a particular route_id
 
     mta_object = MTARealTimeFeedParser("2")
 
