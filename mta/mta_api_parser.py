@@ -72,18 +72,9 @@ class MTARealTimeFeedParser:
     def get_realtime_version(self):
         return self.__gtfs_realtime_version
 
-    '''
-    iterate through list of feedEntity objects and find which train id corresponds to subway line number
-    there's a static mta webpage that has the conversions... Assuming that this page does not change, the 
-    (id -> subway line number) can be hardcoded 
-    '''
-
-    #def get_subway_line(self, subway_line_number):
-
-
 def main():
-    #TODO: api feed can return multiple route_id's (meaning a series of subsequent trains)
-    # first step in parsing should be to fetch all trains (by route_id) and store them in a queue structure
+    #TODO: first step in parsing should be to collect all incoming trains for a particular station (by stop_id) and store them in a queue structure
+    # check if gtfs-realtime has built in methods to parse data efficiently OR use different gtfs_realtime_pb2() class
 
     mta_object = MTARealTimeFeedParser("2")
 
