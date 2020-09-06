@@ -25,6 +25,7 @@ class MTARealTimeFeedParser:
     '''
 
     def __init__(self, route_id):
+        #TODO: add stop_id and refresh_rate params
         self.__mta_trains,\
         self.__feed_timestamp,\
         self.__gtfs_realtime_version = self.connect(route_id)
