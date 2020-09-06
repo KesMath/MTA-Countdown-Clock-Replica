@@ -1,9 +1,9 @@
 import sys
 import requests
-import datetime
 from mta.tokenauth import TokenAuth
 from util.os_func import PROJECT_DIR
 from configparser import ConfigParser
+from util import timestamp_converter
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
 from config.gtfs_class_parsers import FEED_MESSAGE
@@ -15,6 +15,8 @@ parser.read(PROJECT_DIR + '/config/mta_config.ini')
 cipher_key = parser.get('keys', 'API_KEY')
 API_KEY = decrypt(cipher_key)
 API_KEY = API_KEY.decode("utf-8")
+
+
 
 class MTARealTimeFeedParser:
     '''
@@ -63,12 +65,7 @@ class MTARealTimeFeedParser:
 
     def get_feed_timestamp(self):
         return "No Feed Timestamp" if self.__feed_timestamp == 0 \
-            else self.__convert_timestamp_to_datetime(self.__feed_timestamp)
-
-    def __convert_timestamp_to_datetime(self, timestamp):
-        return datetime.datetime.fromtimestamp(
-                int(timestamp)
-                ).strftime('%m-%d-%Y %H:%M:%S')
+            else timestamp_converter.convert_timestamp_to_datetime(self.__feed_timestamp)
 
     def get_realtime_version(self):
         return self.__gtfs_realtime_version
