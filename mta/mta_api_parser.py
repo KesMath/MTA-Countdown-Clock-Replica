@@ -16,7 +16,7 @@ cipher_key = parser.get('keys', 'API_KEY')
 API_KEY = decrypt(cipher_key)
 API_KEY = API_KEY.decode("utf-8")
 
-class MTARealTimeFeed:
+class MTARealTimeFeedParser:
     '''
     class that pulls in real time data feeds from the Metropolitan Transportation Authority
     based in New York City. The feed that request.get() returns is serialized
@@ -86,7 +86,7 @@ def main():
     # Given that multiple departure times for a given train is obtained,
     # how does one determine which one to always correctly choose from for a given stop??
 
-    mta_object = MTARealTimeFeed("2")
+    mta_object = MTARealTimeFeedParser("2")
 
     print("MTA Trains: " + str(mta_object.get_train_count()))
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())

@@ -1,0 +1,456 @@
+# NorthBound 2 Train Sample Feed Pulled Saturday, September 5, 2020 10:35:43 PM
+
+Summary: for a given trip_id,
+it shows a set of arrival and departure times per stop!
+
+I.e.
+'Wakefield - 241 St':
+247N-> Flatbush Ave (arrival & departure = 1599357480)
+246N-> Newkirk Avenue (arrival & departure = 1599357540)
+245N-> Beverly Rd (arrival & departure = 1599357630)
+...
+
+Question: how does this subset fit in relation to the other trip_ids?
+
+trip_update {
+  trip:{
+  trip_id: "131600_2..N01R",
+  start_date: "20200905"
+  route_id: "2"
+}
+stop_time_update {
+  departure:{
+  time: 1599357360
+}
+stop_id: "247N"
+}
+stop_time_update {
+arrival {
+time: 1599357480
+}
+departure {
+time: 1599357480
+}
+stop_id: "246N"
+}
+stop_time_update {
+arrival {
+time: 1599357540
+}
+departure {
+time: 1599357540
+}
+stop_id: "245N"
+}
+stop_time_update {
+arrival {
+time: 1599357630
+}
+departure {
+time: 1599357630
+}
+stop_id: "244N"
+}
+stop_time_update {
+arrival {
+time: 1599357690
+}
+departure {
+time: 1599357690
+}
+stop_id: "243N"
+}
+stop_time_update {
+arrival {
+time: 1599357780
+}
+departure {
+time: 1599357780
+}
+stop_id: "242N"
+}
+stop_time_update {
+arrival {
+time: 1599357840
+}
+departure {
+time: 1599357840
+}
+stop_id: "241N"
+}
+stop_time_update {
+arrival {
+time: 1599358020
+}
+departure {
+time: 1599358020
+}
+stop_id: "239N"
+}
+stop_time_update {
+arrival {
+time: 1599358110
+}
+departure {
+time: 1599358110
+}
+stop_id: "238N"
+}
+stop_time_update {
+arrival {
+time: 1599358200
+}
+departure {
+time: 1599358200
+}
+stop_id: "237N"
+}
+stop_time_update {
+arrival {
+time: 1599358320
+}
+departure {
+time: 1599358320
+}
+stop_id: "236N"
+}
+stop_time_update {
+arrival {
+time: 1599358380
+}
+departure {
+time: 1599358380
+}
+stop_id: "235N"
+}
+stop_time_update {
+arrival {
+time: 1599358470
+}
+departure {
+time: 1599358470
+}
+stop_id: "234N"
+}
+stop_time_update {
+arrival {
+time: 1599358560
+}
+departure {
+time: 1599358560
+}
+stop_id: "233N"
+}
+stop_time_update {
+arrival {
+time: 1599358650
+}
+departure {
+time: 1599358650
+}
+stop_id: "232N"
+}
+stop_time_update {
+arrival {
+time: 1599358740
+}
+departure {
+time: 1599358740
+}
+stop_id: "231N"
+}
+stop_time_update {
+arrival {
+time: 1599358920
+}
+departure {
+time: 1599358920
+}
+stop_id: "230N"
+}
+stop_time_update {
+arrival {
+time: 1599358980
+}
+departure {
+time: 1599358980
+}
+stop_id: "229N"
+}
+stop_time_update {
+arrival {
+time: 1599359100
+}
+departure {
+time: 1599359100
+}
+stop_id: "228N"
+}
+stop_time_update {
+arrival {
+time: 1599359160
+}
+departure {
+time: 1599359160
+}
+stop_id: "137N"
+}
+stop_time_update {
+arrival {
+time: 1599359400
+}
+departure {
+time: 1599359400
+}
+stop_id: "132N"
+}
+stop_time_update {
+arrival {
+time: 1599359550
+}
+departure {
+time: 1599359550
+}
+stop_id: "128N"
+}
+stop_time_update {
+arrival {
+time: 1599359610
+}
+departure {
+time: 1599359610
+}
+stop_id: "127N"
+}
+stop_time_update {
+arrival {
+time: 1599359850
+}
+departure {
+time: 1599359850
+}
+stop_id: "123N"
+}
+stop_time_update {
+arrival {
+time: 1599360000
+}
+departure {
+time: 1599360000
+}
+stop_id: "120N"
+}
+stop_time_update {
+arrival {
+time: 1599360240
+}
+departure {
+time: 1599360240
+}
+stop_id: "227N"
+}
+stop_time_update {
+arrival {
+time: 1599360300
+}
+departure {
+time: 1599360300
+}
+stop_id: "226N"
+}
+stop_time_update {
+arrival {
+time: 1599360390
+}
+departure {
+time: 1599360390
+}
+stop_id: "225N"
+}
+stop_time_update {
+arrival {
+time: 1599360480
+}
+departure {
+time: 1599360480
+}
+stop_id: "224N"
+}
+stop_time_update {
+arrival {
+time: 1599360660
+}
+departure {
+time: 1599360660
+}
+stop_id: "222N"
+}
+stop_time_update {
+arrival {
+time: 1599360780
+}
+departure {
+time: 1599360780
+}
+stop_id: "221N"
+}
+stop_time_update {
+arrival {
+time: 1599360900
+}
+departure {
+time: 1599360900
+}
+stop_id: "220N"
+}
+stop_time_update {
+arrival {
+time: 1599360990
+}
+departure {
+time: 1599360990
+}
+stop_id: "219N"
+}
+stop_time_update {
+arrival {
+time: 1599361050
+}
+departure {
+time: 1599361050
+}
+stop_id: "218N"
+}
+stop_time_update {
+arrival {
+time: 1599361110
+}
+departure {
+time: 1599361110
+}
+stop_id: "217N"
+}
+stop_time_update {
+arrival {
+time: 1599361200
+}
+departure {
+time: 1599361200
+}
+stop_id: "216N"
+}
+stop_time_update {
+arrival {
+time: 1599361320
+}
+departure {
+time: 1599361320
+}
+stop_id: "215N"
+}
+stop_time_update {
+arrival {
+time: 1599361410
+}
+departure {
+time: 1599361410
+}
+stop_id: "214N"
+}
+stop_time_update {
+arrival {
+time: 1599361500
+}
+departure {
+time: 1599361500
+}
+stop_id: "213N"
+}
+stop_time_update {
+arrival {
+time: 1599361620
+}
+departure {
+time: 1599361620
+}
+stop_id: "212N"
+}
+stop_time_update {
+arrival {
+time: 1599361740
+}
+departure {
+time: 1599361740
+}
+stop_id: "211N"
+}
+stop_time_update {
+arrival {
+time: 1599361860
+}
+departure {
+time: 1599361860
+}
+stop_id: "210N"
+}
+stop_time_update {
+arrival {
+time: 1599361920
+}
+departure {
+time: 1599361920
+}
+stop_id: "209N"
+}
+stop_time_update {
+arrival {
+time: 1599362010
+}
+departure {
+time: 1599362010
+}
+stop_id: "208N"
+}
+stop_time_update {
+arrival {
+time: 1599362100
+}
+departure {
+time: 1599362100
+}
+stop_id: "207N"
+}
+stop_time_update {
+arrival {
+time: 1599362190
+}
+departure {
+time: 1599362190
+}
+stop_id: "206N"
+}
+stop_time_update {
+arrival {
+time: 1599362250
+}
+departure {
+time: 1599362250
+}
+stop_id: "205N"
+}
+stop_time_update {
+arrival {
+time: 1599362340
+}
+departure {
+time: 1599362340
+}
+stop_id: "204N"
+}
+stop_time_update {
+arrival {
+time: 1599362460
+}
+stop_id: "201N"
+}
+}
