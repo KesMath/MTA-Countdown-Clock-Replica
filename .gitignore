@@ -2,4 +2,5 @@
 *.iml
 __pycache__/
 private_key.key
-api_connect.sh
+curl_api_connect.sh
+py_api_connect.py
