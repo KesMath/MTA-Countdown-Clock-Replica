@@ -8,7 +8,6 @@ from util import timestamp_converter
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
 from config.gtfs_class_parsers import FEED_MESSAGE
-from google.protobuf.json_format import MessageToDict
 
 gtfs_parser = FEED_MESSAGE.get("class")
 parser = ConfigParser()
@@ -83,7 +82,6 @@ class MTARealTimeFeedParser:
         return self.__gtfs_realtime_version
 
 def main():
-    #TODO: first step in parsing should be to collect all incoming trains for a particular station (by stop_id) and store them in a queue structure
 
     mta_object = MTARealTimeFeedParser(route_id="2", stop_id="405N")
 
