@@ -1,21 +1,20 @@
 import sys
 import requests
 from mta.tokenauth import TokenAuth
+from config.stops_dict import STOPS
 from util.os_func import PROJECT_DIR
 from configparser import ConfigParser
 from util import timestamp_converter
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
 from config.gtfs_class_parsers import FEED_MESSAGE
-
+from google.protobuf.json_format import MessageToDict
 
 gtfs_parser = FEED_MESSAGE.get("class")
 parser = ConfigParser()
 parser.read(PROJECT_DIR + '/config/mta_config.ini')
 cipher_key = parser.get('keys', 'API_KEY')
-API_KEY = decrypt(cipher_key)
-API_KEY = API_KEY.decode("utf-8")
-
+API_KEY = decrypt(cipher_key).decode("utf-8")
 
 
 class MTARealTimeFeedParser:
@@ -26,13 +25,15 @@ class MTARealTimeFeedParser:
     Thus, Google's gtfs_realtime_pb2 in essential for conversion of this binary into readable format
     '''
 
-    def __init__(self, route_id):
-        #TODO: add stop_id and refresh_rate params
+    def __init__(self, route_id, stop_id):
+        #TODO: add refresh_rate params
+        if stop_id not in STOPS.keys():
+            raise KeyError(stop_id + " is not a valid stop_id!")
         self.__mta_trains,\
         self.__feed_timestamp,\
-        self.__gtfs_realtime_version = self.connect(route_id)
+        self.__gtfs_realtime_version = self.connect(route_id=route_id, stop_id=stop_id)
 
-    def connect(self, route_id):
+    def connect(self, route_id, stop_id):
         real_time_feed_link = get_url(route_id)
         try:
             bytes_response = requests.get(url=real_time_feed_link, auth=TokenAuth(API_KEY))
@@ -45,9 +46,20 @@ class MTARealTimeFeedParser:
 
         gtfs_parser.ParseFromString(bytes_response.content)
 
-        return ([entity for entity in gtfs_parser.entity],
+        return (self.__filter_train(list_of_entities=gtfs_parser.entity, stop_id=stop_id),
                 gtfs_parser.header.timestamp,
                 gtfs_parser.header.gtfs_realtime_version)
+
+    def __filter_train(self, list_of_entities, stop_id):
+        queue = list() #use entity.trip_update.trip.route_id to populate route_id as well as departure times
+        for entity in list_of_entities:
+            stops_length = entity.trip_update.stop_time_update.__len__()
+            while stops_length != 0:
+                stop_time_update_object = entity.trip_update.stop_time_update.pop()
+                if stop_time_update_object.stop_id == stop_id:
+                    queue.append(stop_time_update_object)
+                stops_length -= 1
+        return queue
 
     def get_mta_trains(self):
         return self.__mta_trains
@@ -55,13 +67,13 @@ class MTARealTimeFeedParser:
     def get_train_count(self):
         return len(self.__mta_trains)
 
-    def get_mta_train(self, train_id):
-        train_length = len(self.__mta_trains)
-        if train_id >= 0:
-            if train_id <= train_length-1:
-                return self.__mta_trains[train_id-1]
-        else:
-            raise IndexError("Select a train ID less than or equal to " + str(train_length))
+    # def get_mta_train(self, train_id):
+    #     train_length = len(self.__mta_trains)
+    #     if train_id >= 0:
+    #         if train_id <= train_length-1:
+    #             return self.__mta_trains[train_id-1]
+    #     else:
+    #         raise IndexError("Select a train ID less than or equal to " + str(train_length))
 
     def get_feed_timestamp(self):
         return "No Feed Timestamp" if self.__feed_timestamp == 0 \
@@ -72,16 +84,13 @@ class MTARealTimeFeedParser:
 
 def main():
     #TODO: first step in parsing should be to collect all incoming trains for a particular station (by stop_id) and store them in a queue structure
-    # check if gtfs-realtime has built in methods to parse data efficiently OR use different gtfs_realtime_pb2() class
 
-    mta_object = MTARealTimeFeedParser("2")
+    mta_object = MTARealTimeFeedParser(route_id="2", stop_id="405N")
 
     print("MTA Trains: " + str(mta_object.get_train_count()))
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
     print("Feed Version: " + mta_object.get_realtime_version())
-
-    feed_entity_object = mta_object.get_mta_trains()
-    print(feed_entity_object)
+    print(mta_object.get_mta_trains())
 
 
 if __name__ == '__main__':
