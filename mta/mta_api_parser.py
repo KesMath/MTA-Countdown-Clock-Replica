@@ -89,8 +89,9 @@ def main():
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
     print("Feed Version: " + mta_object.get_realtime_version())
     print(mta_object.get_mta_trains())
-    #NOTE: can create some dictionary mapping route_id -> image so it can be displayed on PI
-    print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
+    #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI
+    #TODO: implement code in timestamp_converter to perform relative time (i.e. departure_timestamp - current_timestamp)
+    #print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
 
 
 
