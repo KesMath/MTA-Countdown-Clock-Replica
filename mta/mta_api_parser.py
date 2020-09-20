@@ -8,6 +8,7 @@ from util import timestamp_converter
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
 from config.gtfs_class_parsers import FEED_MESSAGE
+from google.protobuf.json_format import MessageToDict
 
 gtfs_parser = FEED_MESSAGE.get("class")
 parser = ConfigParser()
@@ -56,7 +57,7 @@ class MTARealTimeFeedParser:
             while stops_length != 0:
                 stop_time_update_object = entity.trip_update.stop_time_update.pop()
                 if stop_time_update_object.stop_id == stop_id:
-                    queue.append((entity.trip_update.trip.route_id, stop_time_update_object))
+                    queue.append((entity.trip_update.trip.route_id, MessageToDict(stop_time_update_object)))
                 stops_length -= 1
         return queue
 
@@ -88,7 +89,7 @@ def main():
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
     print("Feed Version: " + mta_object.get_realtime_version())
     print(mta_object.get_mta_trains())
-    #print(mta_object.get_mta_train(1)[1].departure.time)
+    #print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
 
 
 if __name__ == '__main__':
