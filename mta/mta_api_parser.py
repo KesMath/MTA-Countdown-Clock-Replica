@@ -50,13 +50,13 @@ class MTARealTimeFeedParser:
                 gtfs_parser.header.gtfs_realtime_version)
 
     def __filter_train(self, list_of_entities, stop_id):
-        queue = list() #use entity.trip_update.trip.route_id to populate route_id as well as departure times
+        queue = list()
         for entity in list_of_entities:
             stops_length = entity.trip_update.stop_time_update.__len__()
             while stops_length != 0:
                 stop_time_update_object = entity.trip_update.stop_time_update.pop()
                 if stop_time_update_object.stop_id == stop_id:
-                    queue.append(stop_time_update_object)
+                    queue.append((entity.trip_update.trip.route_id, stop_time_update_object))
                 stops_length -= 1
         return queue
 
@@ -66,13 +66,13 @@ class MTARealTimeFeedParser:
     def get_train_count(self):
         return len(self.__mta_trains)
 
-    # def get_mta_train(self, train_id):
-    #     train_length = len(self.__mta_trains)
-    #     if train_id >= 0:
-    #         if train_id <= train_length-1:
-    #             return self.__mta_trains[train_id-1]
-    #     else:
-    #         raise IndexError("Select a train ID less than or equal to " + str(train_length))
+    def get_mta_train(self, train_id):
+        train_length = len(self.__mta_trains)
+        if train_id >= 0:
+            if train_id <= train_length-1:
+                return self.__mta_trains[train_id-1]
+        else:
+            raise IndexError("Select a train ID less than or equal to " + str(train_length))
 
     def get_feed_timestamp(self):
         return "No Feed Timestamp" if self.__feed_timestamp == 0 \
@@ -82,13 +82,13 @@ class MTARealTimeFeedParser:
         return self.__gtfs_realtime_version
 
 def main():
-
-    mta_object = MTARealTimeFeedParser(route_id="2", stop_id="405N")
+    mta_object = MTARealTimeFeedParser(route_id="2", stop_id="247N")
 
     print("MTA Trains: " + str(mta_object.get_train_count()))
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
     print("Feed Version: " + mta_object.get_realtime_version())
     print(mta_object.get_mta_trains())
+    #print(mta_object.get_mta_train(1)[1].departure.time)
 
 
 if __name__ == '__main__':
