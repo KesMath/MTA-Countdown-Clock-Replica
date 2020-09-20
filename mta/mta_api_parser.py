@@ -31,9 +31,9 @@ class MTARealTimeFeedParser:
             raise KeyError(stop_id + " is not a valid stop_id!")
         self.__mta_trains,\
         self.__feed_timestamp,\
-        self.__gtfs_realtime_version = self.connect(route_id=route_id, stop_id=stop_id)
+        self.__gtfs_realtime_version = self.__connect(route_id=route_id, stop_id=stop_id)
 
-    def connect(self, route_id, stop_id):
+    def __connect(self, route_id, stop_id):
         real_time_feed_link = get_url(route_id)
         try:
             bytes_response = requests.get(url=real_time_feed_link, auth=TokenAuth(API_KEY))
@@ -91,6 +91,7 @@ def main():
     print(mta_object.get_mta_trains())
     #NOTE: can create some dictionary mapping route_id -> image so it can be displayed on PI
     print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
+
 
 
 if __name__ == '__main__':
