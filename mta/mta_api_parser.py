@@ -91,6 +91,7 @@ def main():
     print(mta_object.get_mta_trains())
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI
     #TODO: implement code in timestamp_converter to perform relative time (i.e. departure_timestamp - current_timestamp)
+    #TODO: convert .svg images to .ppm - consider gimp
     #print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
 
 
