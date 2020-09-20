@@ -4,7 +4,7 @@ from mta.tokenauth import TokenAuth
 from config.stops_dict import STOPS
 from util.os_func import PROJECT_DIR
 from configparser import ConfigParser
-from util import timestamp_converter
+from util import timestamp_operators
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
 from config.gtfs_class_parsers import FEED_MESSAGE
@@ -61,6 +61,8 @@ class MTARealTimeFeedParser:
                 stops_length -= 1
         return queue
 
+    #TODO: add decorator to perform relative time (i.e. departure_timestamp - current_timestamp)
+    # it should iterate though the 1st index of this listing, fetch timestamp and apply subtration function which will be in timestamp_operators.py
     def get_mta_trains(self):
         return self.__mta_trains
 
@@ -77,7 +79,7 @@ class MTARealTimeFeedParser:
 
     def get_feed_timestamp(self):
         return "No Feed Timestamp" if self.__feed_timestamp == 0 \
-            else timestamp_converter.convert_timestamp_to_datetime(self.__feed_timestamp)
+            else timestamp_operators.convert_timestamp_to_datetime(self.__feed_timestamp)
 
     def get_realtime_version(self):
         return self.__gtfs_realtime_version
@@ -89,8 +91,9 @@ def main():
     print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
     print("Feed Version: " + mta_object.get_realtime_version())
     print(mta_object.get_mta_trains())
-    #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI
-    #TODO: implement code in timestamp_converter to perform relative time (i.e. departure_timestamp - current_timestamp)
+    #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
+    # This will be implemented later when factory class comes into play
+
     #TODO: convert .svg images to .ppm - consider gimp
     #print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
 
