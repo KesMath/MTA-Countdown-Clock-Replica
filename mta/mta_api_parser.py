@@ -94,8 +94,6 @@ def main():
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
     # This will be implemented later when factory class comes into play
 
-    #TODO: convert .svg images to .ppm - consider gimp
-    #print(mta_object.get_mta_train(1)[1].get('departure').get('time'))
 
 
 
