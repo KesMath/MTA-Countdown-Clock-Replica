@@ -5,20 +5,8 @@ def convert_timestamp_to_datetime(timestamp):
         int(timestamp)
     ).strftime('%m-%d-%Y %H:%M:%S')
 
-
-if __name__ == '__main__':
-    timestamps = [
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        ''
-    ]
-    for time in timestamps: print(convert_timestamp_to_datetime(time))
-
+def compute_relative_time(timestamp):
+    """subtracts current timestamp from param timestamp and converts value into minutes"""
+    return int((timestamp - datetime.datetime.now().timestamp())/60) \
+                            if timestamp > datetime.datetime.now().timestamp() else -1
 
