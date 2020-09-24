@@ -29,6 +29,8 @@ class MTARealTimeFeedParser:
         #TODO: add refresh_rate params
         if stop_id not in STOPS.keys():
             raise KeyError(stop_id + " is not a valid stop_id!")
+        else:
+            self.__stop_name = STOPS.get(stop_id)
         self.__mta_trains,\
         self.__feed_timestamp,\
         self.__gtfs_realtime_version = self.__connect(route_id=route_id, stop_id=stop_id)
@@ -57,25 +59,33 @@ class MTARealTimeFeedParser:
             while stops_length != 0:
                 stop_time_update_object = entity.trip_update.stop_time_update.pop()
                 if stop_time_update_object.stop_id == stop_id:
+
+                    """NOTE: based on observation, 
+                        final stop for a given route will NOT contain arrival time field populated
+                        thus no need to compute relative time"""
+                    stop_time_update_object.arrival.time = \
+                        timestamp_operators.compute_relative_time(stop_time_update_object.arrival.time)
+
+                    stop_time_update_object.departure.time = \
+                        timestamp_operators.compute_relative_time(stop_time_update_object.departure.time)
+                    #TODO: need to sort for multiple routes in a given stop! Can create custom queue class to fix this
                     queue.append((entity.trip_update.trip.route_id, MessageToDict(stop_time_update_object)))
                 stops_length -= 1
         return queue
 
-    #TODO: add decorator to perform relative time (i.e. departure_timestamp - current_timestamp)
-    # it should iterate though the 1st index of this listing, fetch timestamp and apply subtration function which will be in timestamp_operators.py
     def get_mta_trains(self):
         return self.__mta_trains
 
     def get_train_count(self):
         return len(self.__mta_trains)
 
-    def get_mta_train(self, train_id):
-        train_length = len(self.__mta_trains)
-        if train_id >= 0:
-            if train_id <= train_length-1:
-                return self.__mta_trains[train_id-1]
-        else:
-            raise IndexError("Select a train ID less than or equal to " + str(train_length))
+    def get_stop_name(self):
+        return self.__stop_name
+
+    def get_mta_train(self, train_index):
+        train_length = self.get_train_count()
+        if 0 <= train_index <= train_length:
+            return self.__mta_trains[train_index]
 
     def get_feed_timestamp(self):
         return "No Feed Timestamp" if self.__feed_timestamp == 0 \
@@ -85,14 +95,16 @@ class MTARealTimeFeedParser:
         return self.__gtfs_realtime_version
 
 def main():
-    mta_object = MTARealTimeFeedParser(route_id="2", stop_id="247N")
-
-    print("MTA Trains: " + str(mta_object.get_train_count()))
-    print("Time Feed was Pulled from MTA Server: " + mta_object.get_feed_timestamp())
-    print("Feed Version: " + mta_object.get_realtime_version())
-    print(mta_object.get_mta_trains())
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
     # This will be implemented later when factory class comes into play
+
+    mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="246N")
+    print("MTA Train Count for this Stop: " + str(mta_parser.get_train_count()))
+    print("Stop Name: " + mta_parser.get_stop_name())
+    print("Time Feed was Pulled from MTA Server: " + mta_parser.get_feed_timestamp())
+    print("Feed Version: " + mta_parser.get_realtime_version())
+    for i in range(0, mta_parser.get_train_count()):
+        print(mta_parser.get_mta_train(i))
 
 
 
