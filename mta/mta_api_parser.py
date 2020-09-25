@@ -1,5 +1,6 @@
 import sys
 import requests
+from queue import PriorityQueue
 from mta.tokenauth import TokenAuth
 from config.stops_dict import STOPS
 from util.os_func import PROJECT_DIR
@@ -53,7 +54,7 @@ class MTARealTimeFeedParser:
                 gtfs_parser.header.gtfs_realtime_version)
 
     def __filter_train(self, list_of_entities, stop_id):
-        queue = list()
+        queue = PriorityQueue()
         for entity in list_of_entities:
             stops_length = entity.trip_update.stop_time_update.__len__()
             while stops_length != 0:
@@ -68,24 +69,33 @@ class MTARealTimeFeedParser:
 
                     stop_time_update_object.departure.time = \
                         timestamp_operators.compute_relative_time(stop_time_update_object.departure.time)
-                    #TODO: need to sort for multiple routes in a given stop! Can create custom queue class to fix this
-                    queue.append((entity.trip_update.trip.route_id, MessageToDict(stop_time_update_object)))
+
+                    inbound_train_tup = (entity.trip_update.trip.route_id, MessageToDict(stop_time_update_object))
+                    """NOTE: PriorityQueue require items to be of (priority number, data) format"""
+                    queue.put(item=(stop_time_update_object.departure.time, inbound_train_tup))
                 stops_length -= 1
         return queue
 
-    def get_mta_trains(self):
-        return self.__mta_trains
-
     def get_train_count(self):
-        return len(self.__mta_trains)
+        return self.__mta_trains.qsize()
 
     def get_stop_name(self):
         return self.__stop_name
 
-    def get_mta_train(self, train_index):
-        train_length = self.get_train_count()
-        if 0 <= train_index <= train_length:
-            return self.__mta_trains[train_index]
+    def display_trains(self):
+        """
+        :return: Pops all elements within priorityQueue thereby depleting this struct!
+        Note: This can be used to show all inbound trains for a given stop
+        """
+        #TODO: test me!
+        while not self.__mta_trains.empty():
+            self.__mta_trains.get()
+
+    def display_train(self):
+        """
+        :return:
+        """
+        return self.__mta_trains.get() if not self.__mta_trains.empty() else None
 
     def get_feed_timestamp(self):
         return "No Feed Timestamp" if self.__feed_timestamp == 0 \
@@ -97,14 +107,13 @@ class MTARealTimeFeedParser:
 def main():
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
     # This will be implemented later when factory class comes into play
-
-    mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="246N")
+    mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="247N")
     print("MTA Train Count for this Stop: " + str(mta_parser.get_train_count()))
     print("Stop Name: " + mta_parser.get_stop_name())
     print("Time Feed was Pulled from MTA Server: " + mta_parser.get_feed_timestamp())
     print("Feed Version: " + mta_parser.get_realtime_version())
-    for i in range(0, mta_parser.get_train_count()):
-        print(mta_parser.get_mta_train(i))
+    #print(mta_parser.display_train())
+    print(mta_parser.display_trains())
 
 
 
