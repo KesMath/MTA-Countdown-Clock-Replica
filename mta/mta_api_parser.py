@@ -61,9 +61,9 @@ class MTARealTimeFeedParser:
                 stop_time_update_object = entity.trip_update.stop_time_update.pop()
                 if stop_time_update_object.stop_id == stop_id:
 
-                    """NOTE: based on observation, 
-                        final stop for a given route will NOT contain arrival time field populated
-                        thus no need to compute relative time"""
+                    # NOTE: based on observation,
+                    # final stop for a given route will NOT contain arrival time field populated
+                    # thus no need to compute relative time
                     stop_time_update_object.arrival.time = \
                         timestamp_operators.compute_relative_time(stop_time_update_object.arrival.time)
 
@@ -71,7 +71,10 @@ class MTARealTimeFeedParser:
                         timestamp_operators.compute_relative_time(stop_time_update_object.departure.time)
 
                     inbound_train_tup = (entity.trip_update.trip.route_id, MessageToDict(stop_time_update_object))
-                    """NOTE: PriorityQueue require items to be of (priority number, data) format"""
+                    # NOTE: departure times seems to be a reasonable priority number for priority queues
+                    # to sort upon. For normal stations, arrival & departure times are observed to be identical values
+                    # while final stop stations only have departure times populated.
+                    # Departure times was chosen by this logic
                     queue.put(item=(stop_time_update_object.departure.time, inbound_train_tup))
                 stops_length -= 1
         return queue
