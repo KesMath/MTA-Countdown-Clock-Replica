@@ -84,12 +84,14 @@ class MTARealTimeFeedParser:
 
     def display_trains(self):
         """
-        :return: Pops all elements within priorityQueue thereby depleting this struct!
+        :return: Pops all elements within priorityQueue and returns elements as a list
         Note: This can be used to show all inbound trains for a given stop
+        (i.e. displaying all trains on a given )
         """
-        #TODO: test me!
+        queue = list()
         while not self.__mta_trains.empty():
-            self.__mta_trains.get()
+            queue.append(self.__mta_trains.get())
+        return queue
 
     def display_train(self):
         """
@@ -108,14 +110,14 @@ def main():
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
     # This will be implemented later when factory class comes into play
     mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="247N")
+    print("Feed Version: " + mta_parser.get_realtime_version())
     print("MTA Train Count for this Stop: " + str(mta_parser.get_train_count()))
     print("Stop Name: " + mta_parser.get_stop_name())
     print("Time Feed was Pulled from MTA Server: " + mta_parser.get_feed_timestamp())
-    print("Feed Version: " + mta_parser.get_realtime_version())
-    #print(mta_parser.display_train())
-    print(mta_parser.display_trains())
-
-
+    print('\n')
+    queue = mta_parser.display_trains()
+    for q in queue:
+        print(q[1])
 
 
 if __name__ == '__main__':
