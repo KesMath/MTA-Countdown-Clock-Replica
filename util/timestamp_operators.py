@@ -14,6 +14,8 @@ def compute_relative_time(timestamp):
     #if timestamp > datetime.datetime.now().timestamp():
         #print((timestamp - datetime.datetime.now().timestamp())/60)
 
+    #TODO: cache datetime.now() reference for better runtime (at the cost of slightly less accurate time)
+    # or just leave it (at the cost of slower runtime but accurate timing
     if timestamp > datetime.datetime.now().timestamp():
         if ((timestamp - datetime.datetime.now().timestamp())/60) % \
                 int(((timestamp - datetime.datetime.now().timestamp())/60)) < 0.5:
