@@ -63,7 +63,6 @@ class MTARealTimeFeedParser:
 
                     # NOTE: based on observation,
                     # final stop for a given route will NOT contain arrival time field populated
-                    # thus no need to compute relative time
                     stop_time_update_object.arrival.time = \
                         timestamp_operators.compute_relative_time(stop_time_update_object.arrival.time)
 
