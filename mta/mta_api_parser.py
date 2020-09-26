@@ -69,7 +69,7 @@ class MTARealTimeFeedParser:
                     stop_time_update_object.departure.time = \
                         timestamp_operators.compute_relative_time(stop_time_update_object.departure.time)
 
-                    inbound_train_tup = (entity.trip_update.trip.route_id, MessageToDict(stop_time_update_object))
+                    inbound_train_tup = ({'route_id': entity.trip_update.trip.route_id}, MessageToDict(stop_time_update_object))
                     # NOTE: departure times seems to be a reasonable priority number for priority queues
                     # to sort upon. For normal stations, arrival & departure times are observed to be identical values
                     # while final stop stations only have departure times populated.
