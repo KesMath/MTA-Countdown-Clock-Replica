@@ -32,15 +32,14 @@ def compute_relative_time(timestamp):
     performs necessary minute rounding (i.e. rounds up if remainder >= 0.5 else rounds down)"""
 
     #NOTE: uncomment code to perform minute analysis to assure rounding accuracy
-    #if timestamp > datetime.datetime.now().timestamp():
-        #print((timestamp - datetime.datetime.now().timestamp())/SEC_TO_MINUTE)
+    if timestamp > datetime.datetime.now().timestamp():
+        print((timestamp - datetime.datetime.now().timestamp())/SEC_TO_MINUTE)
 
     #TODO: cache datetime.now() reference for better runtime (at the cost of slightly less accurate time)
     # or just compute at each line (at the cost of slower runtime but accurate timing)
 
-    #FIXME: account for ZeroDivisionError when 0 % 0 occurs!
     if timestamp > datetime.datetime.now().timestamp():
-        if ((timestamp - datetime.datetime.now().timestamp())/SEC_TO_MINUTE) % \
+        if ((timestamp - datetime.datetime.now().timestamp())/SEC_TO_MINUTE) - \
                 int(((timestamp - datetime.datetime.now().timestamp())/SEC_TO_MINUTE)) < ROUNDING_THRESHOLD:
             return math.floor(((timestamp - datetime.datetime.now().timestamp())/SEC_TO_MINUTE))
         else:
