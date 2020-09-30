@@ -75,7 +75,12 @@ class MTARealTimeFeedParser:
                     # to sort upon. For normal stations, arrival & departure times are observed to be identical values
                     # while final stop stations only have departure times populated.
                     # Departure times was chosen by this logic
-                    queue.put(item=(stop_time_update_object.departure.time, inbound_train_tup))
+                    try:
+                        queue.put(item=(stop_time_update_object.departure.time, inbound_train_tup))
+                    except TypeError as e:
+                        print(e)
+                        print(stop_time_update_object.departure.time)
+                        print(inbound_train_tup)
                 stops_length -= 1
         return queue
 
