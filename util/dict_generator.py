@@ -30,13 +30,23 @@ def generate_dictionary(relative_path, filename, key_index, value_index):
                    + generate_dictionary.__name__ + "()\"\"\"\n\n"\
                    + dict_name.upper() + " = { \n"
 
+        directional_indicator_exists = True if dict_name == 'stops' and key_index == 0 else False
+
         for index, row in enumerate(data):
             csv_delim_list = row.split(',')
             row_len = len(csv_delim_list)
 
             #rows within txt file has a probability of being jagged hence it's necessary to check per iteration
             if key_index < row_len and value_index < row_len:
-                dict_str += "   '" + csv_delim_list[key_index] + "': \"" + csv_delim_list[value_index] + "\",\n"
+                """ NOTE: this patch ignores all keys without 'N' or 'S' indicator
+                    because they do not return any results when api is called
+                """
+                if directional_indicator_exists:
+                    direction_indicator = csv_delim_list[key_index][-1]
+                    if direction_indicator == 'N' or direction_indicator == 'S':
+                        dict_str += "   '" + csv_delim_list[key_index] + "': \"" + csv_delim_list[value_index] + "\",\n"
+                else:
+                    dict_str += "   '" + csv_delim_list[key_index] + "': \"" + csv_delim_list[value_index] + "\",\n"
             else:
                 raise IndexError("Row " + str(index) + " of size " + str(row_len) +
                                  " cannot be accessed with one of these index values: ("
