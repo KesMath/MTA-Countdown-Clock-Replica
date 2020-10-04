@@ -5,4 +5,4 @@ application along with relevant static content (i.e. portable pixel format image
 
 
 
-![Alt text](API_Validation.png?raw=true “Accuracy Validation”)
+![Screen Shot 2020-10-03 at 8 35 30 PM](API_Validation.png?raw=true “Accuracy Validation”)
