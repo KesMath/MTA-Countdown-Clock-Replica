@@ -27,7 +27,6 @@ class MTARealTimeFeedParser:
     '''
 
     def __init__(self, route_id, stop_id):
-        #TODO: add refresh_rate params
         if stop_id not in STOPS.keys():
             raise KeyError(stop_id + " is not a valid stop_id!")
         else:
