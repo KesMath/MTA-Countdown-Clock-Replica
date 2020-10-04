@@ -5,4 +5,4 @@ application along with relevant static content (i.e. portable pixel format image
 
 
 
-![Alt text](img/NYCS-bull-trans-2-Std.ppm?raw=true “Accuracy Validation”)
+![Alt text](API_Validation.png?raw=true “Accuracy Validation”)
