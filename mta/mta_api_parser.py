@@ -70,10 +70,13 @@ class MTARealTimeFeedParser:
 
                     inbound_train_tup = ({'route_id': entity.trip_update.trip.route_id},
                                          MessageToDict(stop_time_update_object))
-                    # NOTE: departure times seems to be a reasonable priority number for priority queues
-                    # to sort upon. For normal stations, arrival & departure times are observed to be identical values
-                    # while final stop stations only have departure times populated.
-                    # Departure times was chosen by this logic
+                    # NOTE: The choice of either 'Departure times' or 'arrival times'
+                    # seems depends on what type of stations.
+                    # For in-between stations (those that are not final stops),
+                    # arrival & departure times are observed to be identical
+                    # values for the most part so either metric is valid for sorting.
+                    # From observation, final stop stations
+                    # must be treated differently (depending if it's initial or final stop?)
                     try:
                         queue.put(item=(stop_time_update_object.departure.time, inbound_train_tup))
                     except TypeError as e:
