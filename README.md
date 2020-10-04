@@ -5,4 +5,4 @@ application along with relevant static content (i.e. portable pixel format image
 
 
 
-![Alt](API_Validation.png “Accuracy Validation”)
+![Alt text](API_Validation.png “Accuracy Validation”)
