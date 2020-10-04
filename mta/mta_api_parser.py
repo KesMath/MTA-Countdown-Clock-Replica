@@ -117,7 +117,7 @@ class MTARealTimeFeedParser:
 def main():
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
     # This will be implemented later when factory class comes into play
-    mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="247S")
+    mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="247N")
     print("Feed Version: " + mta_parser.get_realtime_version())
     print("MTA Train Count for this Stop: " + str(mta_parser.get_train_count()))
     print("Stop Name: " + mta_parser.get_stop_name())
