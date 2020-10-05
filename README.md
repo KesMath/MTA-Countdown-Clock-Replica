@@ -1,4 +1,4 @@
-# :metro: MTA COUNTDOWN CLOCK REPLICA :metro:
+# :tv::metro: MTA COUNTDOWN CLOCK REPLICA :metro::tv:
 
 Repository that pulls in real time data feeds from the Metropolitan Transportation Authority based in New York City.
 The goal of this repo serves as a _'Hello World'_ into the realm of electronics to which I shall replicate a real-time
@@ -7,4 +7,5 @@ application along with relevant static content (i.e. portable pixel format image
 
 
 
-![Alt text](API_Validation.png?raw=true “Accuracy Validation”)
+## API Validation
+![](API_Validation.png)
