@@ -37,8 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/keslermathieu/Desktop/Kes_Python_Repo/rest_api/venv"
-export VIRTUAL_ENV
+export VIRTUAL_ENV=$(cd ..;pwd)
 
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$VIRTUAL_ENV/bin:$PATH"
