@@ -4,3 +4,4 @@ __pycache__/
 private_key.key
 curl_api_connect.sh
 py_api_connect.py
+venv/
