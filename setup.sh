@@ -1,14 +1,20 @@
 #!/bin/bash
-echo "altering pythonpath..."
-export PYTHONPATH=$PYTHONPATH:$(pwd):$(pwd)/venv/lib/python3.7/site-packages/
+export PYTHONPATH=$PYTHONPATH:$(pwd)
 echo "pythonpath altered"
+echo $PYTHONPATH
+
+#TODO: add pip install -r requirements.txt iff pip is installed on machine
 
 
-#TODO: get this shell script to run
 
-# given that this project was written using python 3.7.1,
-# research to assure that any higher version is backwards compatible
-# and able to run this version!
 
-# also place version case on mta_api_parser.py 
-# i.e. if python --version >=3.7.1 then continue to run
+#Compatible: Python version x.y is compatible with w.z if x == w and y >= z
+#Potentially compatible: Python version x.y is potentially compatible to version w.z if x == w and y < z
+
+
+
+#SETUP CMDS:
+#cd MTA-Countdown-Clock-Replica
+# source ./setup.sh
+# fetch API_KEY and generate private key file 
+# python3 mta/mta_api_parser.py
