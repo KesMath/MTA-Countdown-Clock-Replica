@@ -14,5 +14,6 @@ echo "pythonpath altered"  $PYTHONPATH
 # fetch API_KEY from mta site and generate private key file - {can encapsulate into this setup.sh file and before running app,
 # consider py_api_connect.py file to test validation before adding encrpyted string to config/mta_config.ini and creating keyfile}
 
-#RUN CMD: 
-# python3 mta/mta_api_parser.py
+#RUN CMD:
+# cd mta 
+# python3 mta_api_parser.py
