@@ -1,7 +1,8 @@
 from cryptography.fernet import Fernet
 from util.os_func import PROJECT_DIR, read_file, write_file
+from util.config_parser import get_config_value
 
-KEY_FILE = "private_key.key"
+KEY_FILE = get_config_value("key_file", "KEY_FILE")
 
 def encrypt(plaintext):
     """

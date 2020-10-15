@@ -1,6 +1,7 @@
 from util.custom_exceptions import RouteIdException
+from util.config_parser import get_config_value
 
-BASELINE_URL = "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs"
+BASELINE_URL = get_config_value("url", "BASELINE_URL")
 
 
 FEED_URLS = {

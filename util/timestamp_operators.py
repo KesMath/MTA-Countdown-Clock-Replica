@@ -1,26 +1,9 @@
-import datetime
 import math
+import datetime
+from util.config_parser import get_config_value
 
 SEC_TO_MINUTE = 60
-
-'''NOTE: may need to adjust rounding threshold for departure/ arrival times!
-   'common rounding technique' may be too optimistic and it's best to err on side of pessimism!  
-   
-   EXAMPLE: If you are rushing to make the train and time is 2.5 til departure,
-   would you rather api round down to 2 minutes so you can rush and make it versus rounding up to 
-   3 minutes so you can think you have more time then you have in actuality?
-   In this case we have a bias for the lowest integer.
-   
-   EXAMPLE: If you are waiting for a train arrival and time is 2.5 til arrival,
-   would you rather the api round down to 2 minutes so you can be over-optimistic
-   and have a false sense of hope versus rounding up to 3 minutes to avoid disappointment and
-   provide more room for possible delays. In this case we have a bias for the highest integer.
-   
-   FYI: this is not critical in the grand scheme of timing as (+ or -) 1 minute is not a major difference.
-   The rounding threshold just adjusts INTEGER BIAS when rounding up or rounding down
-   
-'''
-ROUNDING_THRESHOLD = 0.5
+ROUNDING_THRESHOLD = float(get_config_value("timing", "ROUNDING_THRESHOLD"))
 
 def convert_timestamp_to_datetime(timestamp):
     return datetime.datetime.fromtimestamp(
