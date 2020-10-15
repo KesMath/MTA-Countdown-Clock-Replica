@@ -113,6 +113,8 @@ class MTARealTimeFeedParser:
         return self.__gtfs_realtime_version
 
 def main():
+    from datetime import datetime
+    init = datetime.now()
     #TODO: can create some dictionary mapping route_id -> image so it can be displayed on PI.
     # This will be implemented later when factory class comes into play
     mta_parser = MTARealTimeFeedParser(route_id="2", stop_id="247N")
@@ -124,7 +126,8 @@ def main():
     queue = mta_parser.display_trains()
     for q in queue:
         print(q[1])
-
+    end = datetime.now()
+    print((end-init).total_seconds())
 
 if __name__ == '__main__':
     main()
