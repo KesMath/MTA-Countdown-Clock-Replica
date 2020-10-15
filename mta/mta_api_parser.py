@@ -3,18 +3,14 @@ import requests
 from queue import PriorityQueue
 from mta.tokenauth import TokenAuth
 from config.stops_dict import STOPS
-from util.os_func import PROJECT_DIR
-from configparser import ConfigParser
-from util import timestamp_operators
 from realtime_feed_urls import get_url
 from util.cryptographic_func import decrypt
 from config.gtfs_class_parsers import FEED_MESSAGE
+from util import timestamp_operators, config_parser
 from google.protobuf.json_format import MessageToDict
 
 gtfs_parser = FEED_MESSAGE.get("class")
-parser = ConfigParser()
-parser.read(PROJECT_DIR + '/config/mta_config.ini')
-cipher_key = parser.get('keys', 'API_KEY')
+cipher_key = config_parser.get_config_value('keys', 'API_KEY')
 API_KEY = decrypt(cipher_key).decode("utf-8")
 
 
