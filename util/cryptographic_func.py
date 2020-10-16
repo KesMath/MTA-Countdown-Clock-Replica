@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-from util.os_func import PROJECT_DIR, read_file, write_file
+from util.os_func import read_file, write_file
 from util.config_parser import get_config_value
 
 KEY_FILE = get_config_value("key_file", "KEY_FILE")
@@ -9,9 +9,8 @@ def encrypt(plaintext):
     :param plaintext: sensitive text needed to be concealed
     :return: cipher text that can be exposed publically
     """
-    fernet = Fernet(read_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="rb")[0])
+    fernet = Fernet(read_file(relative_path='..', file_name=KEY_FILE, mode="rb")[0])
     return fernet.encrypt(plaintext)
-
 
 
 def decrypt(ciphertext):
@@ -19,7 +18,7 @@ def decrypt(ciphertext):
     :param ciphertext: encrypted text as string type
     :return: plaintext format needed to be executed by app logic
     """
-    fernet = Fernet(read_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="rb")[0])
+    fernet = Fernet(read_file(relative_path='..', file_name=KEY_FILE, mode="rb")[0])
     return fernet.decrypt(str.encode(ciphertext))
 
 
@@ -27,16 +26,12 @@ def generate_keyfile():
     """
     :return: saves key to 'private_key.key' file
     """
-    write_file(relative_path=PROJECT_DIR, file_name=KEY_FILE, mode="wb", content=Fernet.generate_key())
+    write_file(relative_path='..', file_name=KEY_FILE, mode="wb", content=Fernet.generate_key())
 
 
 def expose_api_key():
     """*********** |EXPOSES API KEY|*********** """
-    #get encrypted key from config file
-    from configparser import ConfigParser
-    parser = ConfigParser()
-    parser.read(PROJECT_DIR + '/config/mta_config.ini')
-    API_KEY = parser.get('keys', 'API_KEY')
+    API_KEY = get_config_value('keys', 'API_KEY')
 
     #decrypt hidden text - function will fail without 'private_key.key' file!
     api_key = decrypt(API_KEY)

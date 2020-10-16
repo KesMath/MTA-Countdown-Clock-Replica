@@ -1,8 +1,8 @@
 from configparser import ConfigParser
-from util.os_func import PROJECT_DIR
+from util.os_func import os
 
 parser = ConfigParser()
-parser.read(PROJECT_DIR + '/config/mta_config.ini')
+parser.read(os.path.join('..', 'config', 'mta_config.ini'))
 
 def get_config_value(section, option):
     """

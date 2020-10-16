@@ -2,10 +2,11 @@
 metaprogramming script to transform certain comma-separated values in
 txt_files/*.txt into simple key value pairs located in config/*_dict.py
 """
-from util.os_func import os, PROJECT_DIR, read_file, write_file
+from util.os_func import os, read_file, write_file
 from util.custom_exceptions import FileExtensionException
+from util.config_parser import get_config_value
 
-SAVE_TO_DIRECTORY = 'config'
+SAVE_TO_DIRECTORY = get_config_value("Paths", "SAVE_DICT_DIRECTORY")
 
 
 def generate_dictionary(relative_path, filename, key_index, value_index):
@@ -53,11 +54,11 @@ def generate_dictionary(relative_path, filename, key_index, value_index):
                                                 + str(key_index) + "," + str(value_index) + ")")
 
         dict_str += "}"
-        write_file(relative_path=os.path.join(PROJECT_DIR, SAVE_TO_DIRECTORY),
+        write_file(relative_path=os.path.join('..', SAVE_TO_DIRECTORY),
                    file_name=dict_name + "_dict.py", mode='w', content=dict_str)
 
 def main():
-    generate_dictionary(relative_path=os.path.join(PROJECT_DIR, 'txt_files'), filename='stops.txt',
+    generate_dictionary(relative_path=os.path.join('..', 'txt_files'), filename='stops.txt',
                         key_index=0, value_index=2)
 
 

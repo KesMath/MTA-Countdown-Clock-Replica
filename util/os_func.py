@@ -1,8 +1,5 @@
 import os
 
-
-PROJECT_DIR = os.path.dirname(os.getcwd())
-
 def parse_file_name(abs_file_path):
     """
     this auxiliary function would be used to set:
