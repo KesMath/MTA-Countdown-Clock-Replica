@@ -2,7 +2,7 @@ import sys
 # RECALL: Python version x.y is potentially compatible to version w.z if x == w and y < z
 # NOTE: This Codebase version 3.7 maybe backwards compatible with [3.0 >= x <= 3.6.12] but needs to be confirmed!
 version_info = sys.version_info
-assert (3, 7) >= version_info <= (3, 9), \
+assert (3, 7) <= version_info <= (3, 9), \
     "Python Version " + str(version_info[0]) + "." + str(version_info[1]) + " is not compatible with this application!"
 import requests
 from queue import PriorityQueue
