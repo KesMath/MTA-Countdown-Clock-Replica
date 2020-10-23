@@ -9,3 +9,8 @@ application along with relevant static content (i.e. portable pixel format image
 
 ## API Validation
 ![](API_Validation.png)
+
+
+## REQUIREMENTS
+This application assumes [pip3](https://pypi.org/project/pip/) and [python3](https://www.python.org/downloads/) (at least version 3.7)
+are installed on your machine
