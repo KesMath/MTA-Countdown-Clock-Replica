@@ -16,4 +16,7 @@ This application assumes [pip3](https://pypi.org/project/pip/) and [python3](htt
 are installed on your machine
 
 ## WIRING
-coming soon...
+General wiring instructions can be found [here](https://github.com/KesMath/MTA-Countdown-Clock-Replica/blob/master/pdf/connecting-a-16x32-rgb-led-matrix-panel-to-a-raspberry-pi.pdf).
+For GPIO to HUB75 interface connection, assure you fetch the corresponding GPIO pin layout 
+for your particular Raspberry Pi model. View the schematics listing [here](https://www.raspberrypi.org/documentation/hardware/raspberrypi/schematics/README.md)
+to search accordingly.
