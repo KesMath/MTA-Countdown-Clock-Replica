@@ -10,6 +10,7 @@ def convert_timestamp_to_datetime(timestamp):
         int(timestamp)
     ).strftime('%m-%d-%Y %H:%M:%S')
 
+#TODO: assure timestamp is within the domain of EST!
 def compute_relative_time(timestamp):
     """subtracts current timestamp from param timestamp and converts value into minutes.
     performs necessary minute rounding (i.e. rounds up if remainder >= 0.5 else rounds down)"""
