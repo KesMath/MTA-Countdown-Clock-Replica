@@ -20,3 +20,6 @@ General wiring instructions can be found [here](https://github.com/KesMath/MTA-C
 For GPIO to HUB75 interface connection, assure you fetch the corresponding GPIO pin layout 
 for your particular Raspberry Pi model. View the schematics listing [here](https://www.raspberrypi.org/documentation/hardware/raspberrypi/schematics/README.md)
 to search accordingly.
+
+## TO BE CONTINUED...
+Development shall recommence after hardware troubleshooting is completed
