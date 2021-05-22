@@ -3,6 +3,10 @@ from util.config_parser import get_config_value
 
 BASELINE_URL = get_config_value("url", "BASELINE_URL")
 
+#TODO: to reduce text redundancy below,
+#remove keys and list them above or in config as enums
+#Then, instead of appending "-x", we can create a function
+#to compress tuple keys and attach as trailing string value to baseline url!
 
 FEED_URLS = {
 

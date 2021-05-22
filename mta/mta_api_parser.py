@@ -23,8 +23,8 @@ class MTARealTimeFeedParser:
     '''
     class that pulls in real time data feeds from the Metropolitan Transportation Authority
     based in New York City. The feed that request.get() returns is serialized
-    (object converted into a binary stream for efficient data transmission across MTA network).
-    Thus, Google's gtfs_realtime_pb2 in essential for conversion of this binary into readable format
+    thus, Google's gtfs_realtime_pb2 in essential for conversion of this binary into readable format
+    This class populates a queue for all available trains relevant to a given stop, sorted by departure time.
     '''
 
     def __init__(self, route_id, stop_id):
