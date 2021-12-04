@@ -1,13 +1,16 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
-RGB_MATRIX_DIMENSION = (64, 16)
 BLACK_TEXT = (0, 0, 0)
 
 # x-coord is 2 pixels rightwards of train logo to introduce padding
 # y-coord is halfway the display size
 TEXT_LOCATION = (6, 8)
+RGB_MATRIX_DIMENSION = (64, 16)
 
+
+# TODO: I believe it may be best to stitch image first then resize to display dimensions
+# TODO: instead working in the confinements of the desired dimensions which posed some display issues
 TMP_DIMENSION = (500, 500)
 TMP_TEXT_LOCATION = (250, 250)
 
