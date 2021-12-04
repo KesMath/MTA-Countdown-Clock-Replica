@@ -1,9 +1,15 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
+RGB_MATRIX_DIMENSION = (64, 16)
+BLACK_TEXT = (0, 0, 0)
+
+# x-coord is 2 pixels rightwards of train logo to introduce padding
+# y-coord is halfway the display size
+TEXT_LOCATION = (6, 8)
+
 def generate_png_image(train_logo_fp, train_info: tuple):
     """
-
     Performs a horizontal merge with:
 
     :param train_logo_fp: filepath of png file containing train logo
@@ -15,13 +21,25 @@ def generate_png_image(train_logo_fp, train_info: tuple):
     https://brooklyneagle.com/wp-content/uploads/2017/09/subway-countdown-clock-02-by-mary-frost-b.jpg
     with the exception of just containing one train departure row for now.
     """
-    pass
+    whitespace = 5 * ' '
+    info_img = Image.new(mode="RGB", size=(500, 100),
+                       color=(256, 256, 256))
+
+    draw = ImageDraw.Draw(info_img)
+    draw.text(xy=TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT)
+    info_img.show()
+
+    logo_img = Image.open(train_logo_fp)
+
+    #logo to take up 25% of display. May want to reduce by a higher factor to indroduce whitespacing around logo
+    logo_img.resize((int(RGB_MATRIX_DIMENSION[0] * 0.25), int(RGB_MATRIX_DIMENSION[1] * 0.25)))
+    logo_img.show()
 
 
 def convert_to_ppm_image(png_image):
     """
     :param png_image:
-    :return: resizes and saves a .png photo to ppm which is the accepted file format for
+    :return: saves a .png photo to ppm which is the accepted file format for
     the rgb-led-matrix panel
     """
     pass
