@@ -8,6 +8,9 @@ BLACK_TEXT = (0, 0, 0)
 # y-coord is halfway the display size
 TEXT_LOCATION = (6, 8)
 
+TMP_DIMENSION = (500, 500)
+TMP_TEXT_LOCATION = (250, 250)
+
 def generate_png_image(train_logo_fp, train_info: tuple):
     """
     Performs a horizontal merge with:
@@ -22,17 +25,17 @@ def generate_png_image(train_logo_fp, train_info: tuple):
     with the exception of just containing one train departure row for now.
     """
     whitespace = 5 * ' '
-    info_img = Image.new(mode="RGB", size=(500, 100),
+    info_img = Image.new(mode="RGB", size=TMP_DIMENSION,
                        color=(256, 256, 256))
 
     draw = ImageDraw.Draw(info_img)
-    draw.text(xy=TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT)
+    draw.text(xy=TMP_TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT)
     info_img.show()
 
     logo_img = Image.open(train_logo_fp)
 
     #logo to take up 25% of display. May want to reduce by a higher factor to indroduce whitespacing around logo
-    logo_img.resize((int(RGB_MATRIX_DIMENSION[0] * 0.25), int(RGB_MATRIX_DIMENSION[1] * 0.25)))
+    logo_img = logo_img.resize((int(TMP_DIMENSION[0] * 0.25), int(TMP_DIMENSION[1] * 0.25)))
     logo_img.show()
 
 
