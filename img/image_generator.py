@@ -13,6 +13,7 @@ RGB_MATRIX_DIMENSION = (64, 16)
 # TODO: instead working in the confinements of the desired dimensions which posed some display issues
 TMP_DIMENSION = (525, 525)
 TMP_TEXT_LOCATION = (250, 250)
+PASTE_LOCATION = (33, 184)
 
 def generate_png_image(train_logo_fp, train_info: tuple):
     """
@@ -35,13 +36,14 @@ def generate_png_image(train_logo_fp, train_info: tuple):
 
     font = ImageFont.truetype('fonts/Helvetica.ttc', size=15)
     draw.text(xy=TMP_TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT, font=font)
-    info_img.show()
 
     logo_img = Image.open(train_logo_fp)
 
     #logo to take up 25% of display. May want to reduce by a higher factor to indroduce whitespacing around logo
     logo_img = logo_img.resize((int(TMP_DIMENSION[0] * 0.25), int(TMP_DIMENSION[1] * 0.25)))
-    logo_img.show()
+
+    info_img.paste(logo_img, PASTE_LOCATION)
+    info_img.save("./countdown_img.png")
 
 
 def convert_to_ppm_image(png_image):
