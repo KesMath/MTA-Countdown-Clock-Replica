@@ -11,7 +11,7 @@ RGB_MATRIX_DIMENSION = (64, 16)
 
 # TODO: I believe it may be best to stitch image first then resize to display dimensions
 # TODO: instead working in the confinements of the desired dimensions which posed some display issues
-TMP_DIMENSION = (500, 500)
+TMP_DIMENSION = (525, 525)
 TMP_TEXT_LOCATION = (250, 250)
 
 def generate_png_image(train_logo_fp, train_info: tuple):
@@ -32,7 +32,9 @@ def generate_png_image(train_logo_fp, train_info: tuple):
                        color=(256, 256, 256))
 
     draw = ImageDraw.Draw(info_img)
-    draw.text(xy=TMP_TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT)
+
+    font = ImageFont.truetype('Helvetica.ttc', size=15)
+    draw.text(xy=TMP_TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT, font=font)
     info_img.show()
 
     logo_img = Image.open(train_logo_fp)
