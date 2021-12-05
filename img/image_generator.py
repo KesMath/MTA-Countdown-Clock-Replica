@@ -33,7 +33,7 @@ def generate_png_image(train_logo_fp, train_info: tuple):
 
     draw = ImageDraw.Draw(info_img)
 
-    font = ImageFont.truetype('Helvetica.ttc', size=15)
+    font = ImageFont.truetype('fonts/Helvetica.ttc', size=15)
     draw.text(xy=TMP_TEXT_LOCATION, text=train_info[0] + whitespace + train_info[1], fill=BLACK_TEXT, font=font)
     info_img.show()
 
