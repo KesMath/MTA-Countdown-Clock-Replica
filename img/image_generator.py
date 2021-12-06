@@ -7,6 +7,7 @@ BLACK_TEXT = (0, 0, 0)
 # y-coord is halfway the display size
 TEXT_LOCATION = (6, 8)
 RGB_MATRIX_DIMENSION = (64, 16)
+MASKING_CIRCLE = (15, 15, 115, 115)
 
 
 # TODO: I believe it may be best to stitch image first then resize to display dimensions
@@ -28,6 +29,19 @@ def generate_png_image(train_logo_fp, train_info: tuple):
     https://brooklyneagle.com/wp-content/uploads/2017/09/subway-countdown-clock-02-by-mary-frost-b.jpg
     with the exception of just containing one train departure row for now.
     """
+
+    def draw_elliptal_mask(img):
+        """
+        :param img: image object to copy size from
+        :return: an circular image object that will be used to remove the black rectangular border of train logo img
+        """
+        mask_im = Image.new("L", img.size, 0)
+        draw = ImageDraw.Draw(mask_im)
+        draw.ellipse(xy=MASKING_CIRCLE, fill=255)
+        mask_im.save('aux/mask_circle.png')
+        return mask_im
+
+
     whitespace = 5 * ' '
     info_img = Image.new(mode="RGB", size=TMP_DIMENSION,
                        color=(256, 256, 256))
@@ -40,9 +54,9 @@ def generate_png_image(train_logo_fp, train_info: tuple):
     logo_img = Image.open(train_logo_fp)
 
     #logo to take up 25% of display. May want to reduce by a higher factor to indroduce whitespacing around logo
-    logo_img = logo_img.resize((int(TMP_DIMENSION[0] * 0.25), int(TMP_DIMENSION[1] * 0.25)))
+    logo_img = logo_img.resize((int(TMP_DIMENSION[0] * 0.25), int(TMP_DIMENSION[1] * 0.25))) # == (131, 131)
 
-    info_img.paste(logo_img, PASTE_LOCATION)
+    info_img.paste(im=logo_img, box=PASTE_LOCATION, mask=draw_elliptal_mask(logo_img))
     info_img.save("./countdown_img.png")
 
 
@@ -57,4 +71,4 @@ def convert_to_ppm_image(png_image):
 if __name__ == '__main__':
     convert_to_ppm_image(
         generate_png_image(train_logo_fp = "NYCS-bull-trans-2-Std.png",
-                           train_info = ("Flatbush Av - Brooklyn College","13 min")))
+                           train_info = ("Flatbush Av - Brooklyn College", "13 min")))
