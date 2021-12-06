@@ -57,7 +57,11 @@ def generate_png_image(train_logo_fp, train_info: tuple):
     logo_img = logo_img.resize((int(TMP_DIMENSION[0] * 0.25), int(TMP_DIMENSION[1] * 0.25))) # == (131, 131)
 
     info_img.paste(im=logo_img, box=PASTE_LOCATION, mask=draw_elliptal_mask(logo_img))
+
+    # TODO: confirm with C++ image writer package to see if resizing to this dimension is accurate
+    # info_img = info_img.resize(RGB_MATRIX_DIMENSION)
     info_img.save("./countdown_img.png")
+    return info_img
 
 
 def convert_to_ppm_image(png_image):
